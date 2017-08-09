@@ -3,15 +3,18 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AppComponent } from './app.component';
 
 import 'hammerjs';
 
-// decorator that modifies app modules
+import { AppComponent } from './app.component';
+import { MenuComponent } from './menu/menu.component';
+
+// declare that modifies app modules
 // meta
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MenuComponent
   ],
   // dependencies
   imports: [
