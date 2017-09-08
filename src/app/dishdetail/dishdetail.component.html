@@ -1,10 +1,4 @@
-<div class="container"
-    fxLayout="row"
-    fxLayout.sm="column"
-    fxLayout.xs="column"
-    fxLayoutAlign.gt-md="space-around center"
-    fxLayoutGap="10px"
-    fxLayoutGap.xs="0">
+<div class="container" fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutAlign.gt-md="space-around center" fxLayoutGap="10px" fxLayoutGap.xs="0">
 
   <div fxFlex="40" *ngIf="dish">
     <md-card>
@@ -26,20 +20,14 @@
   </div>
 
   <div fxFlex="40" *ngIf="dish">
-    <md-card>
-      <md-card-header>
-        <md-card-title>
-          <h3 md-title>Comments</h3>
-        </md-card-title>
-      </md-card-header>
-      <md-card-content *ngFor="let comment of dish.comments">
-        <div>
-          <div>{{comment.comment}}</div>
-          <div>{{comment.rating}} Stars</div>
-          <div>-- {{comment.author}} {{comment.date | date}}</div>
-        </div>
-      </md-card-content>
-    </md-card>
+    <h3 md-title>Comments</h3>
+    <md-list>
+      <md-list-item *ngFor="let comment of dish.comments">
+        <p md-line>{{comment.comment}}</p>
+        <p md-line>{{comment.rating}} Stars</p>
+        <p md-line>-- {{comment.author}} {{comment.date | date}}</p>
+      </md-list-item>
+    </md-list>
   </div>
 
 </div>
