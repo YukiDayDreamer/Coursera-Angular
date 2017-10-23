@@ -7,17 +7,17 @@ export class DishService {
 
   constructor() { }
 
-  getDishes(): Dish[] {  // Dish[] means the return type is a Dish array
-    return DISHES;
+  getDishes(): Promise<Dish[]> {  // Dish[] means the return type is a Dish array
+    return Promise.resolve(DISHES);
   }
 
-  getDish(id: number): Dish {
+  getDish(id: number): Promise<Dish> {
     // es6 way
-    return DISHES.filter((dish) => (dish.id === id))[0];
+    return Promise.resolve(DISHES.filter((dish) => (dish.id === id))[0]);
   }
 
-  getFeaturedDish() : Dish {
-    return DISHES.filter((dish) => (dish.featured))[0];
+  getFeaturedDish() : Promise<Dish> {
+    return Promise.resolve(DISHES.filter((dish) => dish.featured)[0]);
   }
 
 }
