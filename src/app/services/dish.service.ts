@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Dish } from '../shared/dish';
-import { DISHES } from '../shared/dishes';
+// import { DISHES } from '../shared/dishes';
 
 import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
@@ -19,21 +19,25 @@ export class DishService {
 
   getDishes(): Observable<Dish[]> {  // Dish[] means the return type is a Dish array
     return this.http.get(baseURL + 'dishes/')
-      .map(res => { return this.processHTTPMsgService.extractData(res); });
+      .map(res => { return this.processHTTPMsgService.extractData(res); })
+      .catch(error => { return this.processHTTPMsgService.handleError(error)});
   }
 
   getDish(id: number): Observable<Dish> {
     return this.http.get(baseURL + 'dishes/' + id)
-      .map(res => { return this.processHTTPMsgService.extractData(res); });
+      .map(res => { return this.processHTTPMsgService.extractData(res); })
+      .catch(error => { return this.processHTTPMsgService.handleError(error)});
   }
 
   getFeaturedDish(): Observable<Dish> {
     return this.http.get(baseURL + 'dishes?featured=true')
-      .map(res => { return this.processHTTPMsgService.extractData(res); });
+      .map(res => { return this.processHTTPMsgService.extractData(res)[0]; })
+      .catch(error => { return this.processHTTPMsgService.handleError(error)});
   }
 
   getDishIds(): Observable<number[]> {
     return this.getDishes()
-      .map(dishes => { return dishes.map(dish => dish.id); });
+      .map(dishes => { return dishes.map(dish => dish.id); })
+      .catch(error => { return error; });
   }
 }
