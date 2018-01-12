@@ -17,6 +17,7 @@ import 'rxjs/add/operator/switchmap';
 export class DishdetailComponent implements OnInit {
 
   dish: Dish;
+  dishcopy = null; // a copy of restangular object
   dishIds: number[];
   prev: number;
   next: number;
@@ -53,7 +54,7 @@ export class DishdetailComponent implements OnInit {
     this.createForm();
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-    .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id)},
+    .subscribe(dish => {this.dish = dish; this.dishcopy = dish; /* save a copy of restangular object */ this.setPrevNext(dish.id)},
       errmess => this.errMess = <any>errmess);
   }
 
@@ -82,16 +83,12 @@ export class DishdetailComponent implements OnInit {
 
   onSubmit() {
     this.comment = this.commentForm.value;
+    this.comment.date = new Date().toISOString();
     console.log(this.comment);
 
-    // push new comment to dish comment array
-    let date = new Date();
-    this.dish.comments.push({
-      rating: this.comment.rating,
-      comment: this.comment.comment,
-      author: this.comment.author,
-      date: date.toISOString()
-    });
+    this.dishcopy.comments.push(this.comment); // push new comment to comment array
+    this.dishcopy.save() // save new dish object to server side
+      .subscribe(dish => { this.dish = dish; console.log(this.dish); }); // reflect changes on client side
 
     // reset comment form
     this.commentForm.reset({
